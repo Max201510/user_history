@@ -318,29 +318,39 @@ import time
 # for i in a:
 #     index = randint(0, 2)
 #     print(i+b[index])
-total_number = 2000
-set_size = int(total_number/2)
-print(set_size)
-test = set(range(1,total_number+1))
-# print(test)
+# total_number = 2000
+# set_size = int(total_number/2)
+# print(set_size)
+# test = set(range(1,total_number+1))
+# # print(test)
+#
+# distribution = [0]*(set_size+1)
+#
+# import random
+# rounds = 100000
+# for i in range(1,rounds):
+#     # print(i)
+#     x = set(random.sample(range(1, total_number), set_size))
+#     y = set(random.sample(range(1, total_number), set_size))
+#     overlap = x.intersection(y)
+#     # print(x)
+#     # print(y)
+#     # print(overlap)
+#     # print(len(overlap))
+#     distribution[len(overlap)] += 1
+# new_distribution = [x/(rounds-1) for x in distribution[1:]]
+# # print(new_distribution)
+# import matplotlib.pyplot as plt;
+# import numpy as np
+# plt.bar(np.arange(len(new_distribution)), new_distribution)
+# plt.show()
 
-distribution = [0]*(set_size+1)
-
-import random
-rounds = 100000
-for i in range(1,rounds):
-    # print(i)
-    x = set(random.sample(range(1, total_number), set_size))
-    y = set(random.sample(range(1, total_number), set_size))
-    overlap = x.intersection(y)
-    # print(x)
-    # print(y)
-    # print(overlap)
-    # print(len(overlap))
-    distribution[len(overlap)] += 1
-new_distribution = [x/(rounds-1) for x in distribution[1:]]
-# print(new_distribution)
-import matplotlib.pyplot as plt;
+from sklearn.metrics import silhouette_score
+from sklearn.cluster import KMeans
 import numpy as np
-plt.bar(np.arange(len(new_distribution)), new_distribution)
-plt.show()
+X = np.array([[1, 2], [1, 4], [1, 0],[4, 2], [4, 4], [4, 0],[7,0],[7,2],[7,4]])
+for i in range(2, 6):
+    kmeans = KMeans(n_clusters=i, random_state=0).fit(X)
+    print(kmeans.labels_)
+    silhouette_avg = silhouette_score(X, kmeans.labels_)
+    print(silhouette_avg)
